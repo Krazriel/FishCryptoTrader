@@ -1,1 +1,11 @@
-# FishCryptoTrader
+# Fish Crypto Trader
+- A virtual goldfish determines what crypto to buy
+- Prerequisites:
+  - A Coin Market Cap API
+  - pygame library (pip3 install pygame)
+- There are two different scripts:
+  - fishCryptoTrader.py : a graphical representation of a goldfish swimming and making a decision
+  - fishCryptoTraderNoG.py : a non graphical representation
+- Once able to access the script: you will be given two random cryptos from the top 50 based on market cap for the fish to decide
+- You will also be given a duration input: enter how long you want the fish to swim for in seconds (ex: 1 hour = 3600)
+- This program was inspired by Michael Reeves's "I Gave My Goldfish $50,000 to Trade Stocks" on YouTube: https://www.youtube.com/watch?v=USKD3vPD6ZA
