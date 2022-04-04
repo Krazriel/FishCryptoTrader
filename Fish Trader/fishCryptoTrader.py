@@ -7,7 +7,8 @@ import pygame
 
 #fetch crypto information
 url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?sort=cmc_rank'
-headers = {'X-CMC_PRO_API_KEY' : '59db6753-6af9-496f-9cea-b7ce9a66dc05'}
+api = input('Enter API Key: ')
+headers = {'X-CMC_PRO_API_KEY' : api}
 response = requests.get(url, headers=headers)
 response_dict = json.loads(response.text)
 
