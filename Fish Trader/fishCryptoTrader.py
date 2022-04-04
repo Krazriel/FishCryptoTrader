@@ -13,10 +13,12 @@ response = requests.get(url, headers=headers)
 response_dict = json.loads(response.text)
 
 #pick two random cryptos
-x = random.sample(range(0, 50), 2)
+def getCrypto():
+    x = random.sample(range(0, 50), 2)
+    choice_1 = response_dict["data"][x[0]]["symbol"]
+    choice_2 = response_dict["data"][x[1]]["symbol"]
 
-choice_1 = response_dict["data"][x[0]]["symbol"]
-choice_2 = response_dict["data"][x[1]]["symbol"]
+    return (choice_1, choice_2)
 
 #set up tank information
 tankLength = 1250
@@ -37,8 +39,9 @@ counterRight = 0
 
 running = True
 
+crypto = getCrypto()
 #Simulation Starts
-print("Choices: ", choice_1, choice_2)
+print("Choices: ", crypto[0], crypto[1])
 
 timeSpan = input("Duration: ")
 timeSpan = float(timeSpan)
@@ -57,7 +60,7 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 #Start the fish
 start = time.time()
 while running:
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -78,10 +81,18 @@ while running:
     screen.blit(goldfish, (fishCurrPosX - (75/2), fishCurrPosZ - (75/2)))
 
     #set up text
-    cryptoDisp_1 = font.render(choice_1 + ': ' + str(counterLeft), True, cryptoColor_1)
-    cryptoDisp_2 = font.render(choice_2 + ': ' + str(counterRight), True, cryptoColor_2)
+    cryptoDisp_1 = font.render(crypto[0] + ': ' + str(counterLeft), True, cryptoColor_1)
+    cryptoDisp_2 = font.render(crypto[1] + ': ' + str(counterRight), True, cryptoColor_2)
     screen.blit(cryptoDisp_1, ((tankLength / 2) / 4, 10))
-    screen.blit(cryptoDisp_2, ((tankLength / 2)+ (tankLength / 2) / 2, 10))
+    screen.blit(cryptoDisp_2, ((tankLength / 2) + (tankLength / 2) / 2, 10))
+
+    if end - start >= timeSpan:
+        pygame.display.flip()
+        pygame.time.delay(5000)
+        counterLeft = 0
+        counterRight = 0
+        start = time.time()
+        crypto = getCrypto()
 
     if end - start < timeSpan:
         if(fishCurrPosX < tankLength / 2):
@@ -128,9 +139,9 @@ while running:
 
 
 if(counterLeft > counterRight):
-    print("Winner: ", choice_1)
+    print("Winner: ", crypto[0])
 else:
-    print("Winner: ", choice_2)
+    print("Winner: ", crypto[1])
 
 pygame.quit()
 
